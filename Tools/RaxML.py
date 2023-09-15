@@ -59,10 +59,10 @@ def parse_raxmlNG_content(content):
 
 
 def call_raxml_mem(tree_str, msa_tmpfile, rates, pinv, alpha, freq):
-	model_line_params = 'GTR{rates}+I{pinv}+G{alpha}+F{freq}'.format(rates="{{{0}}}".format("/".join(rates)),
+	model_line_params = 'GTR{rates}+I{pinv}+G{alpha}+F{freq}'.format(rates="{{{0}}}".format("/".join(map(str,rates))),
 									 pinv="{{{0}}}".format(pinv), alpha="{{{0}}}".format(alpha),
-									 freq="{{{0}}}".format("/".join(freq)))
-
+									 freq="{{{0}}}".format("/".join(map(str,freq))))
+	print(model_line_params)
 	# create tree file in memory and not in the storage:
 	tree_rampath = "/Users/mihaid/" + str(random.random())  + str(random.random()) + "tree"  # the var is the str: tmp{dir_suffix}
 

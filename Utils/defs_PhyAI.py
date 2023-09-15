@@ -28,8 +28,8 @@ TEST_DATA_PATH = DATA_PATH + "test_data" + SEP
 ###############################################################################
 ######################## global vars for common strings #######################
 ###############################################################################
-#MODEL_DEFAULT = "GTR+I+G"
-DEFAULT_MODEL = "GTR"
+DEFAULT_MODEL = "GTR+I+G"
+#DEFAULT_MODEL = "GTR"
 OPT_TYPE = "br"
 PHYLIP_FORMAT = "iphylip"
 REARRANGEMENTS_NAME = "rearrangement"
@@ -68,7 +68,7 @@ FEATURES = OrderedDict([("bl", "edge_length"), ("longest", "longest_branch") ,
 FEATURES_RGFT_ONLY = ["top_dist", "bl_dist", "res_bl"]
 FEATURES_RGFT = [feature for key, feature in FEATURES.items()]
 FEATURES_PRUNE = [feature for key, feature in FEATURES.items()]
-[FEATURES_PRUNE.remove(FEATURES[f]) for f in FEATURES_RGFT_ONLY]
+a = [FEATURES_PRUNE.remove(FEATURES[f]) for f in FEATURES_RGFT_ONLY]
 FEATURES_SHARED = ["orig_ds_id", "orig_ds_tbl", "longest_branch"]
 merged_prune, merged_rgft = FEATURES_PRUNE.copy(), FEATURES_RGFT.copy()
 [merged_prune.remove(f) for f in FEATURES_SHARED], [merged_rgft.remove(f) for f in FEATURES_SHARED]
