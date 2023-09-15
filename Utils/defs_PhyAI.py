@@ -45,7 +45,7 @@ MSA_PHYLIP_FILENAME = "real_msa.phy"
 PHYML_STATS_FILENAME = MSA_PHYLIP_FILENAME + "_phyml_stats_{0}.txt"
 PHYML_TREE_FILENAME = MSA_PHYLIP_FILENAME + "_phyml_tree_{0}.txt"
 SUMMARY_PER_DS = "{}ds_summary_{}_{}_step{}.csv"
-TREES_PER_DS = "{}newicks_step{}.csv"
+TREES_PER_DS = "{}newicks_step.csv"
 LEARNING_DATA = "learning_{}_step{}.csv"
 DATA_WITH_PREDS = "with_preds_merged_{}.csv"
 SCORES_PER_DS = "scores_per_ds_{}.csv"
@@ -59,6 +59,7 @@ SCORES_PER_DS = "scores_per_ds_{}.csv"
 LABEL = "d_ll_{}"
 FEATURES = OrderedDict([("bl", "edge_length"), ("longest", "longest_branch") ,
 						("tbl_p","tbl_pruned"),("tbl_r","tbl_remaining"),
+						("ntaxa_p", "name2ntaxa_pruned"), ("ntaxa_r", "name2ntaxa_remaining"),
 						("longest_p","longest_pruned"),("longest_r","longest_remaining"),
 						("top_dist","topology_dist_between"), ("bl_dist","tbl_dist_between"),   # only for rgft
 						("res_bl", "res_tree_edge_length"),                                     # only for rgft
@@ -68,10 +69,14 @@ FEATURES = OrderedDict([("bl", "edge_length"), ("longest", "longest_branch") ,
 FEATURES_RGFT_ONLY = ["top_dist", "bl_dist", "res_bl"]
 FEATURES_RGFT = [feature for key, feature in FEATURES.items()]
 FEATURES_PRUNE = [feature for key, feature in FEATURES.items()]
-a = [FEATURES_PRUNE.remove(FEATURES[f]) for f in FEATURES_RGFT_ONLY]
+for f in FEATURES_RGFT_ONLY:
+    FEATURES_PRUNE.remove(FEATURES[f]) 
 FEATURES_SHARED = ["orig_ds_id", "orig_ds_tbl", "longest_branch"]
 merged_prune, merged_rgft = FEATURES_PRUNE.copy(), FEATURES_RGFT.copy()
-[merged_prune.remove(f) for f in FEATURES_SHARED], [merged_rgft.remove(f) for f in FEATURES_SHARED]
+for f in FEATURES_SHARED:
+    merged_prune.remove(f) 
+for f in FEATURES_SHARED:
+    merged_rgft.remove(f) 
 FEATURES_MERGED = FEATURES_SHARED + [feature + "_prune" for feature in merged_prune] + [feature + "_rgft" for feature in merged_rgft]
 ###############################################################################
 
