@@ -31,7 +31,6 @@ def update_node_features(subtree):
 
 
 def calc_leaves_features(tree_str, move_type):
-	print(tree_str)
 	t = Tree(tree_str, format=1)
 	if move_type != 'prune' and move_type != 'rgft':   # namely move_type in the prune_name to return for the res_tree
 		return (t&move_type).dist
@@ -136,7 +135,6 @@ def index_shared_features(dff, ind, edge, move_type, features_dicts_dict):
 
 	#index subtrees features
 	for subtype in ["p", "r"]:
-		print(features_dicts_dict["ntaxa_{}".format(subtype)][edge])
 		dff[ind, FEATURES["ntaxa_{}".format(subtype)]] = features_dicts_dict["ntaxa_{}".format(subtype)][edge]  		#f4,5
 		dff[ind, FEATURES["tbl_{}".format(subtype)]] = features_dicts_dict["tbl_{}".format(subtype)][edge]  			#f6,7
 		dff[ind, FEATURES["longest_{}".format(subtype)]] = features_dicts_dict["longest_{}".format(subtype)][edge]	#f8,9
@@ -150,10 +148,8 @@ def collect_features(ds_path, tree_file, outpath_prune, outpath_rgft, tree_type=
 	df_rgft = pd.read_csv(outpath_rgft, index_col=0)
 
 	features_prune_dicts_dict = calc_leaves_features(tree_file, "prune")
-	print(features_prune_dicts_dict)
 	for i, row in dfr.iterrows():
 		ind = row.name
-		print(ind)
 		tree = row["newick"]
 		if row["rgft_name"] == SUBTREE2:	# namely the remaining subtree
 			features_rgft_dicts_dict = calc_leaves_features(tree, "rgft")  # msa will be truncated within the function

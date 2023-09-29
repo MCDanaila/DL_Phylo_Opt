@@ -2,6 +2,7 @@ import re
 import os
 import itertools
 from Utils.utils import is_file_empty
+from Utils.defs_PhyAI import PHYML_STATS_FILENAME, PHYML_TREE_FILENAME
 
 PHYML_SCRIPT = "/Users/mihaid/Coding-Projects/thesis/tools/PhyML-3.1/PhyML-3.1_macOS-MountainLion"
 
@@ -64,7 +65,8 @@ def run_phyml(msa_filepath, full_model, topology="ml", tree_file=None, run_id=No
 	phyml_exec_line = create_phyml_exec_line_full_model(msa_filepath, full_model, topology, tree_file, run_id)
 	output_filename = msa_filepath + "_phyml_{}_" + run_id + ".txt"
 
-	stats_file, tree_file = output_filename.format("stats"), output_filename.format("tree")
+	stats_file = PHYML_STATS_FILENAME.format(msa_filepath, run_id)
+	tree_file = PHYML_TREE_FILENAME.format(msa_filepath, run_id)
 
 	if is_file_empty(stats_file):
 		os.system(phyml_exec_line)

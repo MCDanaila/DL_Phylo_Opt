@@ -42,11 +42,11 @@ N_ESTIMATORS = 70
 
 
 MSA_PHYLIP_FILENAME = "real_msa.phy"
-PHYML_STATS_FILENAME = MSA_PHYLIP_FILENAME + "_phyml_stats_{0}.txt"
-PHYML_TREE_FILENAME = MSA_PHYLIP_FILENAME + "_phyml_tree_{0}.txt"
-SUMMARY_PER_DS = "{}ds_summary_{}_{}_step{}.csv"
+PHYML_STATS_FILENAME = "{}_phyml_stats_{}.txt"
+PHYML_TREE_FILENAME = "{}_phyml_tree_{}.txt"
+SUMMARY_PER_DS = "{}ds_summary_SPR_{}.csv"
 TREES_PER_DS = "{}newicks_step.csv"
-LEARNING_DATA = "learning_{}_step{}.csv"
+LEARNING_DATA = "learning_{}.csv"
 DATA_WITH_PREDS = "with_preds_merged_{}.csv"
 SCORES_PER_DS = "scores_per_ds_{}.csv"
 ###############################################################################
