@@ -3,5 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+data/*/*.txt
+data/*/*.csv
 data/*/*/*.txt
 data/*/*/*.csv
+
+# Mac meta files
+.DS_Store
+
+# IDE files
+.idea
