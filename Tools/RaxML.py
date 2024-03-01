@@ -1,7 +1,7 @@
 import re
 import random
 import os
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE, STDOUT, DEVNULL
 
 SEP = '/'
 RAXML_NG_SCRIPT = "/Users/mihaid/Coding-Projects/thesis/tools/raxml-ng_v1.2.0_macos_x86_64/raxml-ng"
@@ -17,7 +17,7 @@ def parse_raxmlNG_content(content):
 
 	# likelihood
 	ll_re = re.search("Final LogLikelihood:\s+(.*)", content)
-	print("ll_re: ", ll_re)
+
 	if ll_re:
 		res_dict["ll"] = ll_re.group(1).strip()
 	elif re.search("BL opt converged to a worse likelihood score by", content) or re.search("failed", content):   # temp, till next version is available
@@ -62,15 +62,15 @@ def call_raxml_mem(tree_str, msa_tmpfile, rates, pinv, alpha, freq):
 	model_line_params = 'GTR{rates}+I{pinv}+G{alpha}+F{freq}'.format(rates="{{{0}}}".format("/".join(map(str,rates))),
 									 pinv="{{{0}}}".format(pinv), alpha="{{{0}}}".format(alpha),
 									 freq="{{{0}}}".format("/".join(map(str,freq))))
-	print(model_line_params)
+	#print(model_line_params)
 	# create tree file in memory and not in the storage:
-	tree_rampath = "/Users/mihaid/" + str(random.random())  + str(random.random()) + "tree"  # the var is the str: tmp{dir_suffix}
+	tree_rampath = "/Volumes/RAMDisk/" + str(random.random())  + str(random.random()) + "tree"  # the var is the str: tmp{dir_suffix}
 
 	try:
 		with open(tree_rampath, "w") as fpw:
 			fpw.write(tree_str)
 
-		p = Popen([RAXML_NG_SCRIPT, '--evaluate', '--msa', msa_tmpfile,'--threads', '2', '--opt-branches', 'on', '--opt-model', 'off', '--model', model_line_params, '--nofiles', '--tree', tree_rampath], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+		p = Popen([RAXML_NG_SCRIPT, '--evaluate', '--msa', msa_tmpfile,'--threads', '4', '--opt-branches', 'on', '--opt-model', 'off', '--model', model_line_params, '--nofiles', '--tree', tree_rampath], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
 		raxml_stdout = p.communicate()[0]
 		raxml_output = raxml_stdout.decode()
 

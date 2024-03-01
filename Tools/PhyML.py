@@ -2,6 +2,10 @@ import re
 import os
 import itertools
 from Utils.utils import is_file_empty
+from Utils.defs_PhyAI import PHYML_STATS_FILENAME, PHYML_TREE_FILENAME
+
+import logging
+logging.basicConfig(filename='PhyRaxML.log', encoding='utf-8', level=logging.DEBUG)
 
 PHYML_SCRIPT = "/Users/mihaid/Coding-Projects/thesis/tools/PhyML-3.1/PhyML-3.1_macOS-MountainLion"
 
@@ -29,7 +33,7 @@ PHYML_MODEL_TAGS = {"JC": [PHYML_SUBS_RATES_TAGS[1], PHYML_BASE_FREQS_TAGS[False
 					"GTR": [PHYML_SUBS_RATES_TAGS[3], PHYML_BASE_FREQS_TAGS[True]]}
 
 ###################################### general ######################################
-PHYML_GENERAL_TAGS = "-d nt -n 1 -b 0 --no_memory_check"
+PHYML_GENERAL_TAGS = "-d nt -n 1 -b 0 --no_memory_check --quiet"
 
 def create_phyml_exec_line(msa_file_full_path, base_model, pinv, gamma, topology="ml", tree_file=None, run_id=None):
 	run_id = (base_model + ("+I" if pinv else "") + ("+G" if gamma else "")) if run_id is None else run_id
@@ -38,7 +42,7 @@ def create_phyml_exec_line(msa_file_full_path, base_model, pinv, gamma, topology
 							   PHYML_OPT_TAGS[topology], PHYML_GENERAL_TAGS, "--run_id " + run_id])
 	if tree_file:
 		execution_tags += " -u " + tree_file
-	print(f"INFO - Running PhyML: {execution_tags=}")
+	logging.info(f"Running PhyML: {execution_tags=}")
 	return " ".join([PHYML_SCRIPT, "-i", msa_file_full_path, execution_tags])
 
 
@@ -47,7 +51,7 @@ def create_phyml_exec_line_full_model(msa_file_full_path, full_model, topology="
 	pinv = "+I" in full_model
 	gamma = "+G" in full_model
 	base_model = re.sub(r'\+.*', '', full_model)
-	print(f"INFO - Running PhyML: {base_model=} {pinv=} {gamma=} {run_id=}")
+	logging.info(f"Running PhyML: {base_model=} {pinv=} {gamma=} {run_id=}")
 	return create_phyml_exec_line(msa_file_full_path, base_model, pinv, gamma, topology, tree_file, run_id)
 
 
@@ -64,7 +68,8 @@ def run_phyml(msa_filepath, full_model, topology="ml", tree_file=None, run_id=No
 	phyml_exec_line = create_phyml_exec_line_full_model(msa_filepath, full_model, topology, tree_file, run_id)
 	output_filename = msa_filepath + "_phyml_{}_" + run_id + ".txt"
 
-	stats_file, tree_file = output_filename.format("stats"), output_filename.format("tree")
+	stats_file = PHYML_STATS_FILENAME.format(msa_filepath, run_id)
+	tree_file = PHYML_TREE_FILENAME.format(msa_filepath, run_id)
 
 	if is_file_empty(stats_file):
 		os.system(phyml_exec_line)
