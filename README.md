@@ -9,5 +9,4 @@ Phylogenetic tree search heuristic optimisation using deep learning methods
 	
 	3.2 for each new tree from the SPR move, calculate the likelihood RaxML or PIP parse and store the stats
 	
-	3.3 ?-- could implement feature extraction in same loop
 4. collect features

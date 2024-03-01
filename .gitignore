@@ -1,3 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+data/*/*.txt
+data/*/*.csv
 data/*/*/*.txt
 data/*/*/*.csv
-*.pyc
+
+# Mac meta files
+.DS_Store
+
+# IDE files
+.idea
