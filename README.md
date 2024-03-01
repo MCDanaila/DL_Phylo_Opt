@@ -1,5 +1,7 @@
 # DL_Phylo_Opt
-Phylogenetic tree search heuristic optimisation using deep learning methods
+Master thesis: "Phylogenetic tree search heuristic optimisation using deep learning methods"
+
+
 
 1. select dataset ad aligment
 2. 	validate input
